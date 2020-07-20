@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Animation API</title>
+
+    <style>
+      body {
+        background-color: black;
+      }
+      .star {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-bottom: 80px solid white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50, -50);
+      }
+
+      .star::after {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-top: 80px solid white;
+        margin: 30px 0 0 -50px;
+      }
+    </style>
+    <script>
+      window.addEventListener("load", function () {
+        var shapeElement = document.querySelector(".star");
+        var frames = [
+          { background: "black", transform: "translateX(0px)" },
+
+          { background: "black", transform: "translateX(1000px)" },
+        ];
+
+        var timing = {
+          duration: 5000,
+          iterations: Infinity,
+          direction: "reverse",
+        };
+        var shapeAnimate = shapeElement.animate(frames, timing);
+
+        //play
+
+        document.querySelector(".play").addEventListener("click", function () {
+          shapeAnimate.play();
+        });
+
+        //pause
+
+        document.querySelector(".pause").addEventListener("click", function () {
+          shapeAnimate.pause();
+        });
+
+        //reverse
+
+        document
+          .querySelector(".reverse")
+          .addEventListener("click", function () {
+            shapeAnimate.reverse();
+          });
+
+        //playback Speed
+
+        document
+          .querySelector("updatePlaybackRate")
+          .addEventListener("click", function () {
+            shapeAnimate.updatePlaybackRate(shapeAnimate.playbackRate * 1.25);
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="star"></div>
+    <br />
+
+    <button class="play">Play</button>
+    <button class="pause">pause</button>
+    <button class="reverse">reverse</button>
+    <button class="updatePlaybackRate">updatePlaybackRate</button>
+  </body>
+</html>
